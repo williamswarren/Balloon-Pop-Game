@@ -10,7 +10,7 @@ class Drop():
         self.windowWidth = windowWidth
         self.windowHeight = windowHeight
 
-        self.dropImage = pygame.image.load("images/drop.png")
+        self.dropImage = pygame.image.load("images/pin.png")
         # A rect is made up of [x, y, width, height]
         dropRect = self.dropImage.get_rect()
         self.width = dropRect[2]

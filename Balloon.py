@@ -11,7 +11,7 @@ class Balloon():
         self.windowHeight = windowHeight
         
         self.clicked = False # if we need to custom draw or handle regular wall collide
-        self.collide = 0
+        self.collide = False
 
         self.balloonImage = pygame.image.load("images/balloon.png")
         self.popSound = pygame.mixer.Sound("sounds/blop.wav")
@@ -42,42 +42,41 @@ class Balloon():
         if self.ySpeed == 0:
             self.ySpeed -= 1
 
-    def update(self):
-        # check for hitting a wall.  If so, change that direction
-        if (self.x < 0) or (self.x > self.maxWidth):
+    def update(self, mouse_event):
+        if mouse_event == "clicked":
+            # change direction of speeds
             self.xSpeed = -self.xSpeed
-
-        if (self.y < 0) or (self.y > self.maxHeight):
             self.ySpeed = -self.ySpeed
 
-        # update the balls x and y, based on the speed in two directions
-        self.x = self.x + self.xSpeed
-        self.y = self.y + self.ySpeed
+            # update the balls x and y, based on the speed in two directions
+            self.x = self.x + self.xSpeed
+            self.y = self.y + self.ySpeed
 
-        # update area
-        self.area = pygame.Rect(self.x, self.y, self.width, self.height)
+            # update area
+            self.area = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        else:
+            # check for hitting a wall.  If so, change that direction
+            if (self.x < 0) or (self.x > self.maxWidth):
+                self.xSpeed = -self.xSpeed
+
+            if (self.y < 0) or (self.y > self.maxHeight):
+                self.ySpeed = -self.ySpeed
+
+            # update the balls x and y, based on the speed in two directions
+            self.x = self.x + self.xSpeed
+            self.y = self.y + self.ySpeed
+
+            # update area
+            self.area = pygame.Rect(self.x, self.y, self.width, self.height)
 
 
-    def fancyUpdate(self):
+    def draw(self, action):
+        if action == "destroy":
+            self.popSound.play()
+            self.window.blit(self.popImage, (self.x, self.y))
+        else:
+            self.window.blit(self.balloonImage, (self.x, self.y))
 
-        # change direction of speeds
-        self.xSpeed = -self.xSpeed
-        self.ySpeed = -self.ySpeed
-
-        # update the balls x and y, based on the speed in two directions
-        self.x = self.x + self.xSpeed
-        self.y = self.y + self.ySpeed
-
-        # update area
-        self.area = pygame.Rect(self.x, self.y, self.width, self.height)
-
-    def draw(self):
-        self.window.blit(self.balloonImage, (self.x, self.y))
-
-    def destroy(self):
-        self.popSound.play()
-        self.window.blit(self.popImage, (self.x, self.y))
-        self.collide += 1
-
-    def nothing(self):
+    def __del__(self):
         del self

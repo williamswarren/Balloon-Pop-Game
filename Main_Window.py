@@ -59,20 +59,20 @@ while True:
                 if balloonObject.area.collidepoint(mouse_pos):
                     balloonObject.clicked = True
 
-        # Check if collision between balloon and drop
+    # Check if collision between balloon and drop
     if dropList and balloonList:
         for obal in balloonList:
             for odrop in dropList:
                 if obal.area.colliderect(odrop.area):
-                    obal.collide += 1
+                    obal.collide = True
 
     # 8 - Do any "per frame" actions
     for oBalloon in balloonList:
         if oBalloon.clicked:
-            oBalloon.fancyUpdate()
+            oBalloon.update("clicked")
             oBalloon.clicked = False
         else:
-            oBalloon.update()  # tell each ball to update itself
+            oBalloon.update("not-clicked")  # tell each ball to update itself
     
     for oDrop in dropList:
         oDrop.update()
@@ -82,14 +82,17 @@ while True:
     
     # 10 - Draw the screen elements
     window.blit(oInstructions, (85, 430))
-    for oBalloon in balloonList:
-        if oBalloon.collide == 1:
-            oBalloon.destroy()
-            continue
-        if oBalloon.collide > 1:
-            oBalloon.nothing()
-            continue
-        oBalloon.draw()   # tell each ball to draw itself
+    balloon_list_length = len(balloonList)
+    index = 0
+    while index < balloon_list_length:
+        if not balloonList[index].collide:
+            balloonList[index].draw("regular")   # tell each ball to draw itself normally
+            index += 1
+        else:
+            balloonList[index].draw("destroy") # tell the ball to draw the air to the screen
+            del balloonList[index] # remove balloon from list (this does not seem like the right way to dereference it...)
+            balloon_list_length -= 1
+            
 
     for oDrop in dropList:
         oDrop.draw() # tell each drop to draw itself
