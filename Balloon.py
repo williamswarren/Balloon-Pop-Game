@@ -42,6 +42,14 @@ class Balloon():
         if self.ySpeed == 0:
             self.ySpeed -= 1
 
+    def checkClick(self, mouse_pos):
+        if self.area.collidepoint(mouse_pos):
+            self.clicked = True
+
+    def checkCollide(self, drop):
+        if self.area.colliderect(drop.area):
+                self.collide = True
+
     def update(self, mouse_event):
         if mouse_event == "clicked":
             # change direction of speeds
@@ -54,6 +62,9 @@ class Balloon():
 
             # update area
             self.area = pygame.Rect(self.x, self.y, self.width, self.height)
+
+            # allow to be clicked again by user
+            self.clicked = False
 
         else:
             # check for hitting a wall.  If so, change that direction

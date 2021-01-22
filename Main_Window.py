@@ -56,21 +56,25 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = pygame.mouse.get_pos()
             for balloonObject in balloonList:
-                if balloonObject.area.collidepoint(mouse_pos):
-                    balloonObject.clicked = True
+                balloonObject.checkClick(mouse_pos)
+                #if balloonObject.area.collidepoint(mouse_pos):
+                    #balloonObject.clicked = True
 
     # Check if collision between balloon and drop
     if dropList and balloonList:
         for obal in balloonList:
             for odrop in dropList:
-                if obal.area.colliderect(odrop.area):
-                    obal.collide = True
+                #print(obal.__dict__)
+                #print(odrop.__dict__)
+                obal.checkCollide(odrop)
+                #if obal.area.colliderect(odrop.area):
+                    #obal.collide = True
 
     # 8 - Do any "per frame" actions
     for oBalloon in balloonList:
         if oBalloon.clicked:
             oBalloon.update("clicked")
-            oBalloon.clicked = False
+            #oBalloon.clicked = False
         else:
             oBalloon.update("not-clicked")  # tell each ball to update itself
     
@@ -90,7 +94,7 @@ while True:
             index += 1
         else:
             balloonList[index].draw("destroy") # tell the ball to draw the air to the screen
-            del balloonList[index] # remove balloon from list (this does not seem like the right way to dereference it...)
+            del balloonList[index] # remove balloon from list (this does not seem like the right way to dereference/destructure it...)
             balloon_list_length -= 1
             
 
