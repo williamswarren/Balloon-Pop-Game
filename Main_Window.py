@@ -83,7 +83,10 @@ while True:
     
     for oDrop in dropList:
         oDrop.update()
-    timer.update()
+
+
+    timer.update() # update game clock time
+    
    # 9 - Clear the screen before drawing it again
     window.fill(BLACK)
     

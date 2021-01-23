@@ -29,24 +29,35 @@ class Time():
     def update(self):
         self.current_time = str(int(time.time() - self.start_time))
         if int(self.current_time) < 60:
-            for index in range(-1, -len(self.current_time), -1):
+            for index in range(-1, -len(self.current_time)-1, -1):
+                print("Index is: ", index)
+                print(self.current_time[index])
                 if index == -1:
-                    self.ones = current_time[index]
+                    self.ones = self.current_time[index]
                 if index == -2:
-                    self.tens = current_time[index]
+                    self.tens = self.current_time[index]
 
         if int(self.current_time) >= 60:
-            hundreds = math.floor(int(self.current_time)/60)
+            self.hundreds = str(math.floor(int(self.current_time)/60))
             ones_tens = str(int(self.current_time)%60)
+            if ones_tens == "0":
+                self.ones = "0"
+                self.tens = "0"
+            else:
             # iterate through both and update clock
+                for index in range(-1, -len(ones_tens)-1, -1):
+                    if index == -1:
+                        self.ones = ones_tens[index]
+                    if index == -2:
+                        self.tens = ones_tens[index]
 
 
 
     def draw(self):
         self.window.blit(self.clock, (self.x, self.y))
-        self.window.blit(self.numbers[0], (self.x + 5, self.y + 8))
-        self.window.blit(self.numbers[0], (self.x + 20, self.y + 8))
-        self.window.blit(self.numbers[0], (self.x + 45, self.y + 8))
-        self.window.blit(self.numbers[0], (self.x + 60, self.y + 8))
+        self.window.blit(self.numbers[self.thousands], (self.x + 5, self.y + 8))
+        self.window.blit(self.numbers[self.hundreds], (self.x + 20, self.y + 8))
+        self.window.blit(self.numbers[self.tens], (self.x + 45, self.y + 8))
+        self.window.blit(self.numbers[self.ones], (self.x + 60, self.y + 8))
 
 
