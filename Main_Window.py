@@ -8,6 +8,7 @@ import random
 from Balloon import *  # bring in the Ball class code
 from Drop import * # bring in Drop class node
 from Time import * # bring in Time class
+from Score import *
 
 # 2 - Define constants
 BLACK = (0, 0, 0)
@@ -22,6 +23,7 @@ pygame.init()
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 clock = pygame.time.Clock()  # set the speed (frames per second)
 timer = Time(window, WINDOW_WIDTH, WINDOW_HEIGHT)
+points = Score(window)
 print("Current time is: ", timer.current_time)
 
 # 4 - Load assets: image(s), sounds, etc.
@@ -86,12 +88,15 @@ while True:
 
 
     timer.update() # update game clock time
+
+    points.update(len(balloonList), len(dropList)) # update points
     
    # 9 - Clear the screen before drawing it again
     window.fill(BLACK)
     
     # 10 - Draw the screen elements
     window.blit(oInstructions, (85, 430))
+    points.draw() 
     timer.draw()
     print("Current time is: ", timer.current_time)
     balloon_list_length = len(balloonList)
@@ -108,7 +113,8 @@ while True:
 
     for oDrop in dropList:
         oDrop.draw() # tell each drop to draw itself
-        
+
+       
     # 11 - Update the screen
     pygame.display.update()
 
