@@ -9,7 +9,7 @@ class Time():
         self.x = windowWidth - 100
         self.y = 10
         self.start_time = time.time()
-        self.current_time = None
+        self.current_time = "0"
         self.ones = "0"
         self.tens = "0"
         self.hundreds = "0"
@@ -27,24 +27,24 @@ class Time():
                         "9":pygame.image.load("images/nine.png")}
     
     def update(self):
+        #Get the current time
         self.current_time = str(int(time.time() - self.start_time))
-        if int(self.current_time) < 60:
-            for index in range(-1, -len(self.current_time)-1, -1):
-                print("Index is: ", index)
-                print(self.current_time[index])
+        if int(self.current_time) < 60: #Handle seconds up to 1 minute
+            for index in range(-1, -len(self.current_time)-1, -1): 
+
                 if index == -1:
                     self.ones = self.current_time[index]
                 if index == -2:
                     self.tens = self.current_time[index]
 
-        if int(self.current_time) >= 60:
+        if int(self.current_time) >= 60: #Handle time over 60 seconds
             self.hundreds = str(math.floor(int(self.current_time)/60))
             ones_tens = str(int(self.current_time)%60)
             if ones_tens == "0":
                 self.ones = "0"
                 self.tens = "0"
             else:
-            # iterate through both and update clock
+            # iterate through remaining seconds and update clock
                 for index in range(-1, -len(ones_tens)-1, -1):
                     if index == -1:
                         self.ones = ones_tens[index]

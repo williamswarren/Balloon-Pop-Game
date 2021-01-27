@@ -22,13 +22,14 @@ FRAMES_PER_SECOND = 30
 pygame.init()
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 clock = pygame.time.Clock()  # set the speed (frames per second)
-timer = Time(window, WINDOW_WIDTH, WINDOW_HEIGHT)
+#timer = Time(window, WINDOW_WIDTH, WINDOW_HEIGHT)
 points = Score(window)
-print("Current time is: ", timer.current_time)
+
 
 # 4 - Load assets: image(s), sounds, etc.
 oInstructions = pygame.image.load('images/instructions.png')
-
+oTitle = pygame.image.load('images/title.png')
+oGame_Play = pygame.image.load('images/gameplay.png')
 # 5 - Initialize variables
 balloonList = []
 dropList = []
@@ -37,7 +38,16 @@ dropList = []
     #oBall = Ball(window, WINDOW_WIDTH, WINDOW_HEIGHT)
     #ballList.append(oBall)  # append the new ball to the list of balls   
 
+# 5.5 - Load Game Title and Game-Play Instructions
+window.fill(BLACK)
+window.blit(oTitle, (70, 10))
+window.blit(oGame_Play, (100, 200))
+pygame.display.update()
+time.sleep(5)
+window.fill(BLACK)
+
 # 6 - Loop forever
+timer = Time(window, WINDOW_WIDTH, WINDOW_HEIGHT) # Start Timer
 while True:
     
     # 7 - Check for and handle events
@@ -98,7 +108,6 @@ while True:
     window.blit(oInstructions, (85, 430))
     points.draw() 
     timer.draw()
-    print("Current time is: ", timer.current_time)
     balloon_list_length = len(balloonList)
     index = 0
     while index < balloon_list_length:
