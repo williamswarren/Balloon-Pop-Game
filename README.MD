@@ -1,4 +1,6 @@
 
+![alt text](https://github.com/williamswarren/Balloon-Pop-Game/blob/master/demo.png)
+
 # Instructions to run the Balloon game:
 
 0. Open Terminal.
